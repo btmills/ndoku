@@ -18,3 +18,11 @@ render = (board) ->
 				subtable.append subtr
 		table.append tr
 	$('body').html $('<table>').addClass('board').append(table)
+
+# Find the proper dimensions of a board with {count} cells per block
+dim = (count) ->
+	height = Math.floor(Math.sqrt(count))
+	while (count / height % 1) != 0
+		height--
+	height: height
+	width: count / height
