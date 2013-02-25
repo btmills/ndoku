@@ -1,8 +1,4 @@
 # Draw a board
-# A board is an array of arrays of arrays of arrays of values
-# Array of rows of blocks containing rows of cells
-# Example 4x4 board:
-# [[[[0,0],[0,0]],[[0,0],[0,0]]],[[[0,0],[0,0]],[[0,0],[0,0]]]]
 render = (board) ->
 	table = $ '<tbody>'
 	for row in board
@@ -19,10 +15,22 @@ render = (board) ->
 		table.append tr
 	$('body').html $('<table>').addClass('board').append(table)
 
-# Find the proper dimensions of a board with {count} cells per block
-dim = (count) ->
-	height = Math.floor(Math.sqrt(count))
-	while (count / height % 1) != 0
-		height--
-	height: height
-	width: count / height
+# Generate a board with {count} cells per block
+# A board is an array of arrays of arrays of arrays of values
+# Array of rows of blocks containing rows of cells
+# Example 4x4 board:
+# [[[[0,0],[0,0]],[[0,0],[0,0]]],[[[0,0],[0,0]],[[0,0],[0,0]]]]
+board = (count) ->
+
+	# Find the proper dimensions of a board with {count} cells per block
+	dim = (count) ->
+		height = Math.floor(Math.sqrt(count))
+		while (count / height % 1) != 0
+			height--
+		height: height
+		width: count / height
+
+	size = dim count
+	((((0 for [1..(size.width)]) for [1..(size.height)]) for [1..(count/size.width)]) for [1..(count/size.height)])
+
+render board 9
