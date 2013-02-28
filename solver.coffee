@@ -83,13 +83,9 @@ nthBoxIds = (board, box) ->
 boxForCell = (board, cell) ->
 	n = Math.sqrt board.length
 	size = dim n
-	#(Math.floor(cell / size.width) % size.width) + (Math.floor(cell / (n * size.height)) * (n / size.width))
 	coord = idToCoord board, cell
-	#console.log n, size, cell, coord
 	x = Math.floor(coord.col / size.width)
-	#y = Math.floor(Math.floor(coord.row * size.width / n) / size.height)
 	y = Math.floor(cell / (n * size.height))
-	#console.log n, size, cell, coord, x, y
 	(n / size.width) * y + x
 
 # Get the cells in the nth box
