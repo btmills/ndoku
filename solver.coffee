@@ -130,3 +130,22 @@ count = (board, ids) ->
 		else if board[id] instanceof Array
 			nums[num - 1].push id for num in board[id]
 	return nums
+
+solve = (board) ->
+	n = Math.sqrt board.length
+
+	deductive = (board) ->
+		unsolved = unsolvedIds board
+		prev = board.length
+		while prev > unsolved.length > 0
+			for id in unsolvedIds board
+				rem = remaining board, id
+				if rem.length < 1
+					throw 'Unsolvable board'
+				else if rem.length == 1
+					board[id] = rem[0]
+				else
+					board[id] = rem
+			prev = unsolved.length
+			unsolved = unsolvedIds board
+		return board
