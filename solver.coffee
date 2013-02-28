@@ -104,7 +104,6 @@ boxCells = (board, cell) ->
 	row = Math.floor(cell / n)
 	topleft = Math.floor(col / size.width) * size.width + Math.floor(row / size.height) * size.height
 
-render board 9
 # Get the ids of all unsolved cells
 unsolvedIds = (board) ->
 	(i for i in [0...board.length] when !(1 <= board[i] <= Math.sqrt(board.length)) or board[i] instanceof Array)
@@ -149,3 +148,26 @@ solve = (board) ->
 			prev = unsolved.length
 			unsolved = unsolvedIds board
 		return board
+
+	singles = (board) ->
+		unsolved = unsolvedIds board
+		prev = board.length
+		while prev > unsolved.length > 0
+			for index in [0...n]
+				counts = count boar
+				board[counts[num]] = num + 1 for num in [0...counts.length] when counts[num].length == 1
+			for index in [0...n]
+				counts = count boar
+				board[counts[num]] = num + 1 for num in [0...counts.length] when counts[num].length == 1
+			for index in [0...n]
+				counts = count boar
+				board[counts[num]] = num + 1 for num in [0...counts.length] when counts[num].length == 1
+			prev = unsolved.length
+			unsolved = unsolvedIds board
+		board
+
+
+	singles deductive singles deductive singles deductive board
+
+board = [7,0,0,4,0,0,0,0,1,9,6,0,2,0,0,8,0,0,0,3,0,5,0,0,0,0,0,0,0,3,0,9,8,2,0,7,0,0,0,1,0,2,0,4,8,8,2,0,7,0,5,1,6,3,0,1,2,0,5,6,7,0,0,0,0,0,9,0,4,5,0,0,0,9,0,3,0,1,4,0,6]
+render solve board
