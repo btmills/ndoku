@@ -34,14 +34,39 @@ board = (n) ->
 	([] for [1..n*n])
 
 # Get the index of a cell at coordinates x, y
-coordId = (board, x, y) ->
+coordToId = (board, col, row) ->
 	n = Math.sqrt board.length
 	size = dim n
-	y * n + x
+	row * n + col
+
+# Get the x, y coordinates given a cell's id
+idToCoord = (board, id) ->
+	#console.log('idToCoord board,', id)
+	n = Math.sqrt board.length
+	col: id % n
+	row: Math.floor(id / n)
 
 # Select the values of the cells at a list of ids
 cells = (board, ids) ->
 	(board[id] for id in ids)
+
+# Get the index of every cell in a specified row
+rowIds = (board, row) ->
+	n = Math.sqrt board.length
+	(n * row + col for col in [0...n])
+
+# Get the cells of the specified row (0-based)
+rowCells = (board, row) ->
+	cells board, rowIds board, row
+
+# Get the index of every cell in a specified column
+colIds = (board, col) ->
+	n = Math.sqrt board.length
+	(col + row * n for row in [0...n])
+
+# Get the cells of the specified column (0-based)
+colCells = (board, col) ->
+	cells board, colIds board, col
 
 # Get the index of every cell in a specified box
 nthBoxIds = (board, box) ->
@@ -52,7 +77,7 @@ nthBoxIds = (board, box) ->
 	result = []
 	for y in [top...(top + size.height)]
 		for x in [left...(left + size.width)]
-			result.push coordId board, x, y
+			result.push coordToId board, x, y
 	return result
 
 # Get the cells of the box containing the specified cell (0-based)
