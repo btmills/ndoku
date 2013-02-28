@@ -105,3 +105,28 @@ boxCells = (board, cell) ->
 	topleft = Math.floor(col / size.width) * size.width + Math.floor(row / size.height) * size.height
 
 render board 9
+# Get the ids of all unsolved cells
+unsolvedIds = (board) ->
+	(i for i in [0...board.length] when !(1 <= board[i] <= Math.sqrt(board.length)) or board[i] instanceof Array)
+
+isPlaced = (board, id) ->
+	typeof board[id] == 'number' and 1 <= board[id] <= Math.sqrt board.length
+
+remaining = (board, id) ->
+	n = Math.sqrt board.length
+	nums = (false for [1..n])
+	coord = idToCoord board, id
+	placed = colIds(board, coord.col).concat rowIds(board, coord.row).concat nthBoxIds board, boxForCell board, id
+	for id in placed when isPlaced board, id
+		nums[board[id] - 1] = true
+	(id + 1 for id in [0...n] when not nums[id])
+
+count = (board, ids) ->
+	n = Math.sqrt board.length
+	nums = ([] for [1..n])
+	for id in ids
+		if isPlaced board, id
+			nums[board[id] - 1].push id
+		else if board[id] instanceof Array
+			nums[num - 1].push id for num in board[id]
+	return nums
