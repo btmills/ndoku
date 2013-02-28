@@ -13,7 +13,7 @@ render = (board) ->
 				for cell in [0...size.width]
 					boxtr.append $('<td>').addClass('cell').html(cells[boxrow * size.width + cell])
 				boxtable.append boxtr
-			tr.append $('<td>').append $('<table>').append boxtable
+			tr.append $('<td>').append $('<table>').addClass('box').append boxtable
 		table.append tr
 	$('body').html $('<table>').addClass('board').append(table)
 
